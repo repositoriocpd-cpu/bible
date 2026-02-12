@@ -1,0 +1,49 @@
+.nav {
+    background-color: white;
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary);
+    font-weight: 900;
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+}
+
+.logoIcon {
+    color: var(--secondary);
+}
+
+.links {
+    display: flex;
+    gap: 2rem;
+}
+
+.link {
+    font-weight: 500;
+    color: var(--muted-foreground);
+    transition: color 0.2s;
+    font-size: 0.95rem;
+}
+
+.link:hover {
+    color: var(--primary);
+}
+
+.active {
+    color: var(--primary);
+    font-weight: 700;
+}

@@ -1,0 +1,45 @@
+.main {
+    min-height: 100vh;
+    background-color: var(--background);
+    padding-bottom: 4rem;
+}
+
+.loading {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    color: var(--primary);
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+}
+
+.spinner {
+    animation: spin 2s linear infinite;
+    color: var(--secondary);
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    padding: 2rem;
+    text-align: center;
+    color: #DC2626;
+    font-family: var(--font-serif);
+}
+
+.empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted-foreground);
+}
