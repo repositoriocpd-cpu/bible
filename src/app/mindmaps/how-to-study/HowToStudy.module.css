@@ -1,0 +1,147 @@
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 4rem 1rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.title {
+    font-size: 3rem;
+    font-family: var(--font-serif);
+    color: var(--foreground);
+    margin-bottom: 1rem;
+}
+
+.subtitle {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+    font-style: italic;
+}
+
+.steps {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    position: relative;
+    margin-bottom: 5rem;
+}
+
+/* Vertical line connecting steps on large screens */
+@media (min-width: 768px) {
+    .steps::before {
+        content: '';
+        position: absolute;
+        left: 45px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: var(--border);
+        z-index: 0;
+    }
+}
+
+.stepCard {
+    display: flex;
+    gap: 2rem;
+    background: var(--background-elevated);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease;
+}
+
+.stepCard:hover {
+    transform: translateX(10px);
+}
+
+.stepIcon {
+    width: 90px;
+    height: 90px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color);
+    color: white;
+    border-radius: 50%;
+    box-shadow: 0 0 20px var(--color);
+}
+
+.stepContent h2 {
+    font-size: 1.75rem;
+    color: var(--color);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-serif);
+}
+
+.question {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 1.5rem;
+}
+
+.checkList {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+}
+
+.checkList li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    color: var(--muted-foreground);
+    font-size: 0.95rem;
+}
+
+.checkList li::before {
+    content: '→';
+    color: var(--color);
+    font-weight: 900;
+}
+
+.summary {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: linear-gradient(135deg, rgba(232, 153, 70, 0.1), rgba(139, 92, 246, 0.1));
+    border-radius: 30px;
+    border: 1px solid var(--border);
+}
+
+.summaryIcon {
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+}
+
+.summary h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-family: var(--font-serif);
+}
+
+.summary p {
+    font-size: 1.25rem;
+    color: var(--muted-foreground);
+}
+
+@media (max-width: 767px) {
+    .stepCard {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .checkList {
+        text-align: left;
+    }
+}

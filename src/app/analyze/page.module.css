@@ -1,0 +1,102 @@
+.main {
+    min-height: 100vh;
+    background-color: var(--background);
+    padding-bottom: 4rem;
+}
+
+.loading {
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    color: var(--foreground);
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+}
+
+.spinner {
+    animation: spin 2s linear infinite;
+    color: var(--primary);
+    filter: drop-shadow(0 0 12px rgba(232, 153, 70, 0.4));
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.error {
+    padding: 2rem;
+    text-align: center;
+    color: var(--error);
+    font-family: var(--font-serif);
+}
+
+.empty {
+    padding: 2rem;
+    text-align: center;
+    color: var(--muted-foreground);
+}
+
+.controls {
+    max-width: 1000px;
+    margin: 2rem auto 0;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: center;
+}
+
+.modeSelector {
+    display: flex;
+    gap: 0.5rem;
+    background: var(--background-elevated);
+    padding: 0.4rem;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.modeBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--muted-foreground);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.modeBtn:hover {
+    color: var(--foreground);
+    background: var(--muted);
+}
+
+.modeBtn.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px rgba(232, 153, 70, 0.3);
+}
+
+@media (max-width: 640px) {
+    .modeSelector {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .modeBtn {
+        padding: 0.5rem 0.8rem;
+        font-size: 0.75rem;
+    }
+}

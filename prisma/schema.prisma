@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Analysis {
+  id                         String   @id @default(uuid())
+  phrase                     String
+  existsInBible              Boolean  @default(true)
+  exactReference             String?
+  literaryGenre              String?
+  fidelityGrade              String   // "ALTA", "MÉDIA", "BAIXA"
+  immediateContext           String
+  historicalContext          String
+  linguisticAnalysis         String
+  commonInterpretation       String
+  interpretiveError          String?
+  correctExegesis            String
+  canonicalTheology          String?
+  properRelatedVerses        String   // JSON string
+  balancedApplication        String?
+  hermeneuticalPrinciplesUsed String? // JSON string
+  isApproved                 Boolean  @default(false)
+  createdAt                  DateTime @default(now())
+  favorites                  Favorite[]
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  favorites Favorite[]
+  userProgress UserProgress[]
+}
+
+model Favorite {
+  id         String   @id @default(uuid())
+  userId     String
+  analysisId String
+  user       User     @relation(fields: [userId], references: [id])
+  analysis   Analysis @relation(fields: [analysisId], references: [id])
+  createdAt  DateTime @default(now())
+}
+
+model HermeneuticCase {
+  id                    String   @id @default(uuid())
+  fallacy               String   // "Texto-Prova", "Anacronismo", etc.
+  verse                 String
+  popularInterpretation String
+  originalContext       String
+  theologicalExplanation String
+  pastoralExplanation    String
+  historicalBackground  String?
+  createdAt             DateTime @default(now())
+}
+
+model UserProgress {
+  id               String   @id @default(uuid())
+  userId           String
+  fallacy          String
+  comprehensionLevel Int     @default(0) // 0-100
+  attempts         Int      @default(0)
+  correctAnswers   Int      @default(0)
+  lastAccessed     DateTime @default(now())
+  user             User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, fallacy])
+}

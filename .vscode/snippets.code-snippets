@@ -1,0 +1,208 @@
+{
+  "Card Component": {
+    "prefix": "raiz-card",
+    "body": [
+      "<div className={styles.card}>",
+      "  $0",
+      "</div>"
+    ],
+    "description": "Card básico com estilo RAIZ DO TEXTO"
+  },
+  "Card CSS": {
+    "prefix": "raiz-card-css",
+    "scope": "css",
+    "body": [
+      ".card {",
+      "  background: var(--background-elevated);",
+      "  border: 1px solid var(--border);",
+      "  border-radius: var(--radius);",
+      "  padding: 1.5rem;",
+      "  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);",
+      "  transition: all 0.3s ease;",
+      "}",
+      "",
+      ".card:hover {",
+      "  border-color: var(--border-strong);",
+      "  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.6);",
+      "}"
+    ],
+    "description": "CSS para card padrão RAIZ DO TEXTO"
+  },
+  "Primary Button": {
+    "prefix": "raiz-button",
+    "body": [
+      "<button className={styles.buttonPrimary} onClick={$1}>",
+      "  $0",
+      "</button>"
+    ],
+    "description": "Botão primário RAIZ DO TEXTO"
+  },
+  "Primary Button CSS": {
+    "prefix": "raiz-button-css",
+    "scope": "css",
+    "body": [
+      ".buttonPrimary {",
+      "  background: linear-gradient(135deg, var(--primary), var(--accent));",
+      "  color: var(--primary-foreground);",
+      "  border: none;",
+      "  padding: 0.75rem 1.5rem;",
+      "  border-radius: var(--radius);",
+      "  font-weight: 700;",
+      "  cursor: pointer;",
+      "  transition: all 0.3s ease;",
+      "  box-shadow: 0 4px 12px rgba(232, 153, 70, 0.3);",
+      "}",
+      "",
+      ".buttonPrimary:hover {",
+      "  transform: translateY(-2px);",
+      "  box-shadow: 0 8px 20px rgba(232, 153, 70, 0.5);",
+      "}",
+      "",
+      ".buttonPrimary:active {",
+      "  transform: translateY(0);",
+      "}"
+    ],
+    "description": "CSS para botão primário RAIZ DO TEXTO"
+  },
+  "Input Field CSS": {
+    "prefix": "raiz-input-css",
+    "scope": "css",
+    "body": [
+      ".input {",
+      "  background: var(--background-elevated);",
+      "  border: 1px solid var(--border-strong);",
+      "  border-radius: var(--radius);",
+      "  padding: 1rem;",
+      "  color: var(--foreground);",
+      "  font-family: var(--font-sans);",
+      "  transition: all 0.3s ease;",
+      "}",
+      "",
+      ".input:focus {",
+      "  outline: none;",
+      "  border-color: var(--primary);",
+      "  box-shadow: 0 0 0 3px rgba(232, 153, 70, 0.2);",
+      "}",
+      "",
+      ".input::placeholder {",
+      "  color: var(--muted-foreground);",
+      "}"
+    ],
+    "description": "CSS para input field RAIZ DO TEXTO"
+  },
+  "Badge Success": {
+    "prefix": "raiz-badge",
+    "body": [
+      "<span className={styles.badgeSuccess}>$0</span>"
+    ],
+    "description": "Badge de sucesso RAIZ DO TEXTO"
+  },
+  "Badge CSS": {
+    "prefix": "raiz-badge-css",
+    "scope": "css",
+    "body": [
+      ".badge {",
+      "  padding: 0.25rem 0.5rem;",
+      "  border-radius: 4px;",
+      "  font-size: 0.7rem;",
+      "  font-weight: 700;",
+      "}",
+      "",
+      ".badgeSuccess {",
+      "  composes: badge;",
+      "  color: var(--success);",
+      "  background: rgba(74, 222, 128, 0.15);",
+      "}",
+      "",
+      ".badgeWarning {",
+      "  composes: badge;",
+      "  color: var(--warning);",
+      "  background: rgba(251, 191, 36, 0.15);",
+      "}",
+      "",
+      ".badgeError {",
+      "  composes: badge;",
+      "  color: var(--error);",
+      "  background: rgba(248, 113, 113, 0.15);",
+      "}"
+    ],
+    "description": "CSS para badges RAIZ DO TEXTO"
+  },
+  "Gradient Title CSS": {
+    "prefix": "raiz-title-gradient",
+    "scope": "css",
+    "body": [
+      ".titleGradient {",
+      "  background: linear-gradient(135deg, var(--primary), var(--primary-hover));",
+      "  -webkit-background-clip: text;",
+      "  -webkit-text-fill-color: transparent;",
+      "  background-clip: text;",
+      "}"
+    ],
+    "description": "CSS para título com gradiente RAIZ DO TEXTO"
+  },
+  "Spinner CSS": {
+    "prefix": "raiz-spinner",
+    "scope": "css",
+    "body": [
+      "@keyframes spin {",
+      "  from { transform: rotate(0deg); }",
+      "  to { transform: rotate(360deg); }",
+      "}",
+      "",
+      ".spinner {",
+      "  animation: spin 2s linear infinite;",
+      "  color: var(--primary);",
+      "  filter: drop-shadow(0 0 12px rgba(232, 153, 70, 0.4));",
+      "}"
+    ],
+    "description": "CSS para spinner com glow RAIZ DO TEXTO"
+  },
+  "Section Header": {
+    "prefix": "raiz-section",
+    "body": [
+      "<section className={styles.section}>",
+      "  <h2 className={styles.sectionTitle}>$1</h2>",
+      "  <p className={styles.sectionSubtitle}>$2</p>",
+      "  $0",
+      "</section>"
+    ],
+    "description": "Seção com título e subtítulo RAIZ DO TEXTO"
+  },
+  "Grid Layout CSS": {
+    "prefix": "raiz-grid",
+    "scope": "css",
+    "body": [
+      ".grid {",
+      "  display: grid;",
+      "  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));",
+      "  gap: 1.5rem;",
+      "}"
+    ],
+    "description": "Grid responsivo RAIZ DO TEXTO"
+  },
+  "Container CSS": {
+    "prefix": "raiz-container",
+    "scope": "css",
+    "body": [
+      ".container {",
+      "  max-width: 1200px;",
+      "  margin: 0 auto;",
+      "  padding: 2rem;",
+      "}"
+    ],
+    "description": "Container padrão RAIZ DO TEXTO"
+  },
+  "Glassmorphism CSS": {
+    "prefix": "raiz-glass",
+    "scope": "css",
+    "body": [
+      ".glass {",
+      "  background: var(--background-elevated);",
+      "  backdrop-filter: blur(10px);",
+      "  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);",
+      "}"
+    ],
+    "description": "Efeito glassmorphism RAIZ DO TEXTO"
+  }
+}
