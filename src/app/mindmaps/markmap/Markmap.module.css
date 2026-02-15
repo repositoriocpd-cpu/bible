@@ -1,0 +1,84 @@
+.container {
+    max-width: 100%;
+    height: 100vh;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background);
+}
+
+.header {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+}
+
+.subtitle {
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+}
+
+.editorContainer {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    min-height: 0;
+}
+
+@media (min-width: 768px) {
+    .editorContainer {
+        grid-template-columns: 350px 1fr;
+    }
+}
+
+.pane {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--card);
+    overflow: hidden;
+}
+
+.paneHeader {
+    padding: 0.5rem 1rem;
+    background: var(--muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.textarea {
+    flex: 1;
+    width: 100%;
+    padding: 1rem;
+    font-family: monospace;
+    font-size: 0.9rem;
+    border: none;
+    resize: none;
+    background: transparent;
+    color: var(--foreground);
+    outline: none;
+}
+
+.preview {
+    flex: 1;
+    background: white;
+    /* Markmap usually looks best on white or needs specific dark mode handling */
+    position: relative;
+    overflow: hidden;
+}
+
+.loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted-foreground);
+}

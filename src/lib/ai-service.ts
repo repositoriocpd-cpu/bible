@@ -564,4 +564,133 @@ async function getMockAnalysis(phrase: string, mode: AnalysisMode): Promise<Anal
     balancedApplication: "Mock Application",
     hermeneuticalPrinciplesUsed: ["Contexto"]
   };
+  // ... existing code ...
+  return {
+    mode: "PADRAO",
+    phrase: phrase,
+    existsInBible: false,
+    exactReference: "Não existe na Bíblia",
+    literaryGenre: "Não aplicável",
+    fidelityGrade: "BAIXA",
+    immediateContext: "Mock fallback Context",
+    historicalContext: "Mock fallback Context",
+    linguisticAnalysis: "Mock fallback Analysis",
+    commonInterpretation: "Mock Interpretation",
+    interpretiveError: "Mock Error",
+    correctExegesis: "Mock Correct Exegesis",
+    canonicalTheology: "Mock Theology",
+    properRelatedVerses: ["João 3:16"],
+    balancedApplication: "Mock Application",
+    hermeneuticalPrinciplesUsed: ["Contexto"]
+  };
+}
+
+// --- OUTLINE GENERATION (ESBOÇO) ---
+
+export interface OutlineRequest {
+  title: string;
+  theme: string;
+  studyType: "Expositivo (Verso por Verso)" | "Textual (Análise de Palavras)" | "Temático (Por Tópicos)" | "Narrativo (Histórico)" | "Verso a Verso (Estudo Intensivo)";
+  bibleVersion: string;
+  extraInstructions?: string;
+}
+
+export const PROMPT_OUTLINE = (req: OutlineRequest) => `
+Você é um assistente teológico especializado em criar esboços de pregação e estudos bíblicos profundos e estruturados.
+
+Gere um esboço detalhado com base nos seguintes dados:
+- Título: ${req.title}
+- Tema: ${req.theme}
+- Tipo de Estudo: ${req.studyType}
+- Versão da Bíblia: ${req.bibleVersion}
+- Instruções Extras: ${req.extraInstructions || "Nenhuma"}
+
+O sistema DEVE retornar o conteúdo formatado em MARKDOWN, seguindo rigorosamente a estrutura abaixo:
+
+# ${req.title}
+
+## Introdução ao Contexto
+(Contexto do Livro, Situação Histórica e Cultural, Estrutura Literária)
+
+## Estrutura e Análise
+(Divida o texto base em seções lógicas de acordo com o Tipo de Estudo escolhido. Para cada seção, faça uma exposição detalhada).
+
+### Análise Textual
+- Contexto do Livro (autor, época, propósito)
+- Contexto do Capítulo e do Livro
+- Contexto Histórico e Cultural
+- Geografia e Locais mencionados
+- Estrutura gramatical e sintaxe
+- Estilo Literário (poesia, prosa, parábola)
+- Abordagem Devocional e Espiritual
+
+### Análise Linguística
+- Palavras do Original (Hebraico/Grego)
+- Significado etimológico
+- Palavras-chave e seus significados
+- Análise Teológica Profunda
+
+### Conexões Bíblicas
+- Referências Cruzadas
+- Ligação com a Lei (Pentateuco)
+- Ligação com os Profetas
+- Ligação com os Evangelhos
+- Ligação com as Epístolas
+- Contexto Histórico Profético
+- Conexão Escatológica
+- Paralelos no Antigo/Novo Testamento
+- Conexões com a tradição da época
+
+### Análise Contextual Profunda
+- Perspectiva Judaica (Talmud, Midrash, Mishná)
+- Contexto Escatológico (últimos dias, apocalíptico)
+- Provas Arqueológicas e Achados
+- Período Histórico do Acontecimento
+
+### Aplicação Prática
+- Aplicação ao contexto moderno
+- Verdades eternas do texto
+- Desafios práticos e comportamentais
+
+---
+IMPORTANTE:
+- Use formatação Markdown (negrito, itálico, listas, citações).
+- Seja profundo teologicamente, acadêmico mas com aplicação pastoral.
+- Cite versículos chave.
+- Se o usuário pediu uma versão específica da Bíblia, use a fraseologia dela quando possível.
+`;
+
+export async function generateOutline(req: OutlineRequest): Promise<string> {
+  const prompt = PROMPT_OUTLINE(req);
+  const apiKey = process.env.GROQ_API_KEY;
+
+  // Tenta usar Groq primeiro (Llama 3 é ótimo para textos longos estruturados em português)
+  if (apiKey) {
+    try {
+      const openai = new OpenAI({ apiKey, baseURL: "https://api.groq.com/openai/v1" });
+      const completion = await openai.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [{ role: "user", content: prompt }],
+      });
+      return completion.choices[0]?.message?.content || "Erro ao gerar esboço.";
+    } catch (e) {
+      console.error("Groq failed, trying fallback...", e);
+    }
+  }
+
+  // Fallback para Google Gemini
+  const googleKey = process.env.GOOGLE_API_KEY;
+  if (googleKey) {
+    try {
+      const genAI = new GoogleGenerativeAI(googleKey);
+      const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+      const result = await model.generateContent(prompt);
+      return result.response.text();
+    } catch (e) {
+      console.error("Gemini failed", e);
+      return "Erro ao gerar esboço. Verifique suas chaves de API.";
+    }
+  }
+
+  return "Nenhuma chave de API configurada para gerar o esboço.";
 }

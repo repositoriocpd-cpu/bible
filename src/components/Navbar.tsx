@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { BookOpen, ChevronDown, Scroll, Cross, GraduationCap } from "lucide-react";
+import { BookOpen, ChevronDown, Scroll, Cross, GraduationCap, Map as MapIcon } from "lucide-react";
 import styles from "./Navbar.module.css";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
@@ -85,11 +85,22 @@ export default function Navbar() {
                                 >
                                     <GraduationCap size={16} /> Como Estudar a Bíblia
                                 </Link>
+                                <Link
+                                    href="/mindmaps/markmap"
+                                    className={styles.dropdownItem}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    <MapIcon size={16} /> Mapa Interativo (Markmap)
+                                </Link>
                             </div>
                         )}
                     </div>
+
+                    <Link href="/outline" className={clsx(styles.link, pathname === "/outline" && styles.active)}>
+                        Esboço
+                    </Link>
                 </div>
             </div>
-        </nav>
+        </nav >
     );
 }
