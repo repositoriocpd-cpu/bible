@@ -1,7 +1,46 @@
 "use client";
 
 import styles from "./NewTestament.module.css";
-import { Book, Compass, Globe, MessageSquare } from "lucide-react";
+import dynamic from 'next/dynamic';
+
+const MarkmapViewer = dynamic(() => import('@/components/MarkmapViewer'), {
+    ssr: false,
+    loading: () => <div className={styles.loading}>Carregando mapa mental...</div>
+});
+
+const MARKDOWN_CONTENT = `# Novo Testamento
+
+## Evangelhos (Biografia de Cristo)
+- **Mateus**: Jesus, o Rei dos Judeus (Cumprimento das Profecias)
+- **Marcos**: Jesus, o Servo Sofredor (Ação Imediata)
+- **Lucas**: Jesus, o Filho do Homem (Salvador Universal)
+- **João**: Jesus, o Filho de Deus (Verbo Divino)
+
+## História
+- **Atos dos Apóstolos**: O Nascimento e Expansão da Igreja
+
+## Epístolas Paulinas
+- **Romanos**: A Justiça de Deus pela Fé
+- **1 e 2 Coríntios**: Problemas na Igreja e Defesa do Ministério
+- **Gálatas**: Liberdade em Cristo vs. Legalismo
+- **Efésios**: A Unidade da Igreja em Cristo
+- **Filipenses**: Alegria no Sofrimento
+- **Colossenses**: A Supremacia de Cristo
+- **1 e 2 Tessalonicenses**: A Segunda Vinda de Cristo
+- **1 e 2 Timóteo**: Instruções Pastorais
+- **Tito**: A Vida Cristã e a Liderança
+- **Filemom**: Perdão e Reconciliação
+
+## Epístolas Gerais
+- **Hebreus**: A Superioridade de Cristo sobre a Antiga Aliança
+- **Tiago**: A Fé em Ação
+- **1 e 2 Pedro**: Esperança no Sofrimento e Falsos Mestres
+- **1, 2 e 3 João**: Amor, Verdade e Comunhão
+- **Judas**: Contenda pela Fé
+
+## Profecia
+- **Apocalipse**: A Vitória Final de Cristo e o Fim dos Tempos
+`;
 
 export default function NewTestamentMindMap() {
     return (
@@ -11,64 +50,13 @@ export default function NewTestamentMindMap() {
                 <p className={styles.subtitle}>A consumação das promessas e a fundação da Igreja através de Jesus Cristo.</p>
             </header>
 
-            <div className={styles.mindMap}>
-                {/* Evangelhos */}
-                <div className={styles.node} style={{ "--color": "#E89946" } as any}>
-                    <div className={styles.nodeHeader}>
-                        <Book size={24} />
-                        <h2>Evangelhos</h2>
-                    </div>
-                    <ul className={styles.nodeList}>
-                        <li><strong>Mateus:</strong> Jesus, o Rei Messias</li>
-                        <li><strong>Marcos:</strong> Jesus, o Servo Sofredor</li>
-                        <li><strong>Lucas:</strong> Jesus, o Filho do Homem</li>
-                        <li><strong>João:</strong> Jesus, o Filho de Deus</li>
-                    </ul>
-                </div>
-
-                {/* Igreja e Atos */}
-                <div className={styles.node} style={{ "--color": "#3B82F6" } as any}>
-                    <div className={styles.nodeHeader}>
-                        <Globe size={24} />
-                        <h2>História da Igreja</h2>
-                    </div>
-                    <ul className={styles.nodeList}>
-                        <li><strong>Atos:</strong> Expansão do Evangelho</li>
-                        <li><strong>Liderança:</strong> Pedro e Paulo</li>
-                        <li><strong>Poder:</strong> Descida do Espírito Santo</li>
-                    </ul>
-                </div>
-
-                {/* Epístolas */}
-                <div className={styles.node} style={{ "--color": "#10B981" } as any}>
-                    <div className={styles.nodeHeader}>
-                        <Compass size={24} />
-                        <h2>Epístolas (Cartas)</h2>
-                    </div>
-                    <ul className={styles.nodeList}>
-                        <li><strong>Paulinas:</strong> Doutrina e Prática (13 cartas)</li>
-                        <li><strong>Gerais:</strong> Hebreus a Judas</li>
-                        <li><strong>Foco:</strong> Teologia aplicada à vida cristã</li>
-                    </ul>
-                </div>
-
-                {/* Apocalíptico */}
-                <div className={styles.node} style={{ "--color": "#8B5CF6" } as any}>
-                    <div className={styles.nodeHeader}>
-                        <MessageSquare size={24} />
-                        <h2>Profecia / Apocalipse</h2>
-                    </div>
-                    <ul className={styles.nodeList}>
-                        <li><strong>Vitória:</strong> O Triunfo do Cordeiro</li>
-                        <li><strong>Juízo:</strong> O destino final das nações</li>
-                        <li><strong>Eternidade:</strong> Novos Céus e Nova Terra</li>
-                    </ul>
-                </div>
+            <div className={styles.mindMapContainer}>
+                <MarkmapViewer markdown={MARKDOWN_CONTENT} />
             </div>
 
             <div className={styles.infoBox}>
                 <h3>Dica de Estudo</h3>
-                <p>O Novo Testamento explica como a Aliança de Deus se cumpre em Cristo para todas as nações.</p>
+                <p>Explore como os Evangelhos fundamentam a fé, Atos narra a expansão e as Epístolas ensinam a doutrina.</p>
             </div>
         </div>
     );

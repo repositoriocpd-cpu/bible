@@ -41,10 +41,29 @@ export default function MarkmapViewer({ markdown }: MarkmapViewerProps) {
     }, [markdown]);
 
     return (
-        <div style={{ position: 'relative', width: '100%', height: '100%', minHeight: '500px' }}>
+        <div style={{ position: 'relative', width: '100%', height: '80vh', minHeight: '600px' }}>
+            <style jsx global>{`
+                .markmap-svg {
+                    width: 100%;
+                    height: 100%;
+                }
+                .markmap-node-text {
+                    fill: #f8fafc !important; /* Texto claro */
+                    font-size: 1.2rem;
+                    font-family: inherit;
+                }
+                .markmap-link {
+                    stroke: #475569 !important; /* Linhas mais sutis */
+                }
+                /* Aumentar circulo dos nós */
+                .markmap-node-circle {
+                    stroke-width: 2px;
+                }
+            `}</style>
             <svg
                 ref={refSvg}
-                style={{ width: '100%', height: '100%', minHeight: '500px' }}
+                className="markmap-svg"
+                style={{ width: '100%', height: '100%' }}
             />
             <div ref={refToolbar} />
         </div>

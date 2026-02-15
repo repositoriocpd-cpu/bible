@@ -85,13 +85,6 @@ export default function Navbar() {
                                 >
                                     <GraduationCap size={16} /> Como Estudar a Bíblia
                                 </Link>
-                                <Link
-                                    href="/mindmaps/markmap"
-                                    className={styles.dropdownItem}
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    <MapIcon size={16} /> Mapa Interativo (Markmap)
-                                </Link>
                             </div>
                         )}
                     </div>

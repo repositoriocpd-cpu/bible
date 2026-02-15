@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { Book, ChevronRight, Search, Loader2, AlertCircle } from "lucide-react";
 import styles from "./page.module.css";
 import clsx from "clsx";
@@ -17,8 +17,9 @@ interface BibleChapter {
 }
 
 const TRANSLATIONS = [
-    { id: "por_arc", name: "Almeida Revista e Corrigida (ARC)" },
-    { id: "por_acf", name: "Almeida Corrigida Fiel (ACF)" },
+    { id: "nvi", name: "Nova Versão Internacional (NVI)" },
+    { id: "acf", name: "Almeida Corrigida Fiel (ACF)" },
+    { id: "aa", name: "Almeida e Atualizada (AA)" },
     { id: "por_blj", name: "Bíblia Livre (BLJ)" },
     { id: "por_onbv", name: "Nova Bíblia Viva (ONBV)" },
     { id: "por_bsl", name: "Bíblia Portuguesa Mundial (BSL)" },
@@ -27,78 +28,78 @@ const TRANSLATIONS = [
 ];
 
 const BOOK_METADATA: Record<string, { id: string, chapters: number }> = {
-    "Gênesis": { id: "GEN", chapters: 50 },
-    "Êxodo": { id: "EXO", chapters: 40 },
-    "Levítico": { id: "LEV", chapters: 27 },
-    "Números": { id: "NUM", chapters: 36 },
-    "Deuteronômio": { id: "DEU", chapters: 34 },
-    "Josué": { id: "JOS", chapters: 24 },
-    "Juízes": { id: "JDG", chapters: 21 },
-    "Rute": { id: "RUT", chapters: 4 },
-    "1 Samuel": { id: "1SA", chapters: 31 },
-    "2 Samuel": { id: "2SA", chapters: 24 },
-    "1 Reis": { id: "1KI", chapters: 22 },
-    "2 Reis": { id: "2KI", chapters: 25 },
-    "1 Crônicas": { id: "1CH", chapters: 29 },
-    "2 Crônicas": { id: "2CH", chapters: 36 },
-    "Esdras": { id: "EZR", chapters: 10 },
-    "Neemias": { id: "NEH", chapters: 13 },
-    "Ester": { id: "EST", chapters: 10 },
-    "Jó": { id: "JOB", chapters: 42 },
-    "Salmos": { id: "PSA", chapters: 150 },
-    "Provérbios": { id: "PRO", chapters: 31 },
-    "Eclesiastes": { id: "ECC", chapters: 12 },
-    "Cantares": { id: "SNG", chapters: 8 },
-    "Isaías": { id: "ISA", chapters: 66 },
-    "Jeremias": { id: "JER", chapters: 52 },
-    "Lamentações": { id: "LAM", chapters: 5 },
-    "Ezequiel": { id: "EZK", chapters: 48 },
-    "Daniel": { id: "DAN", chapters: 12 },
-    "Oseias": { id: "HOS", chapters: 14 },
-    "Joel": { id: "JOL", chapters: 3 },
-    "Amós": { id: "AMO", chapters: 9 },
-    "Obadias": { id: "OBA", chapters: 1 },
-    "Jonas": { id: "JON", chapters: 4 },
-    "Miqueias": { id: "MIC", chapters: 7 },
-    "Naum": { id: "NAM", chapters: 3 },
-    "Habacuque": { id: "HAB", chapters: 3 },
-    "Sofonias": { id: "ZEP", chapters: 3 },
-    "Ageu": { id: "HAG", chapters: 2 },
-    "Zacarias": { id: "ZEC", chapters: 14 },
-    "Malaquias": { id: "MAL", chapters: 4 },
-    "Mateus": { id: "MAT", chapters: 28 },
-    "Marcos": { id: "MRK", chapters: 16 },
-    "Lucas": { id: "LUK", chapters: 24 },
-    "João": { id: "JHN", chapters: 21 },
-    "Atos": { id: "ACT", chapters: 28 },
-    "Romanos": { id: "ROM", chapters: 16 },
-    "1 Coríntios": { id: "1CO", chapters: 16 },
-    "2 Coríntios": { id: "2CO", chapters: 13 },
-    "Gálatas": { id: "GAL", chapters: 6 },
-    "Efésios": { id: "EPH", chapters: 6 },
-    "Filipenses": { id: "PHP", chapters: 4 },
-    "Colossenses": { id: "COL", chapters: 4 },
-    "1 Tessalonicenses": { id: "1TH", chapters: 5 },
-    "2 Tessalonicenses": { id: "2TH", chapters: 3 },
-    "1 Timóteo": { id: "1TI", chapters: 6 },
-    "2 Timóteo": { id: "2TI", chapters: 4 },
-    "Tito": { id: "TIT", chapters: 3 },
-    "Filemom": { id: "PHM", chapters: 1 },
-    "Hebreus": { id: "HEB", chapters: 13 },
-    "Tiago": { id: "JAS", chapters: 5 },
-    "1 Pedro": { id: "1PE", chapters: 5 },
-    "2 Pedro": { id: "2PE", chapters: 3 },
-    "1 João": { id: "1JN", chapters: 5 },
-    "2 João": { id: "2JN", chapters: 1 },
-    "3 João": { id: "3JN", chapters: 1 },
-    "Judas": { id: "JUD", chapters: 1 },
-    "Apocalipse": { id: "REV", chapters: 22 }
+    "Gênesis": { id: "gn", chapters: 50 },
+    "Êxodo": { id: "ex", chapters: 40 },
+    "Levítico": { id: "lv", chapters: 27 },
+    "Números": { id: "nm", chapters: 36 },
+    "Deuteronômio": { id: "dt", chapters: 34 },
+    "Josué": { id: "js", chapters: 24 },
+    "Juízes": { id: "jz", chapters: 21 },
+    "Rute": { id: "rt", chapters: 4 },
+    "1 Samuel": { id: "1sm", chapters: 31 },
+    "2 Samuel": { id: "2sm", chapters: 24 },
+    "1 Reis": { id: "1rs", chapters: 22 },
+    "2 Reis": { id: "2rs", chapters: 25 },
+    "1 Crônicas": { id: "1cr", chapters: 29 },
+    "2 Crônicas": { id: "2cr", chapters: 36 },
+    "Esdras": { id: "ed", chapters: 10 },
+    "Neemias": { id: "ne", chapters: 13 },
+    "Ester": { id: "et", chapters: 10 },
+    "Jó": { id: "job", chapters: 42 },
+    "Salmos": { id: "sl", chapters: 150 },
+    "Provérbios": { id: "pv", chapters: 31 },
+    "Eclesiastes": { id: "ec", chapters: 12 },
+    "Cantares": { id: "ct", chapters: 8 },
+    "Isaías": { id: "is", chapters: 66 },
+    "Jeremias": { id: "jr", chapters: 52 },
+    "Lamentações": { id: "lm", chapters: 5 },
+    "Ezequiel": { id: "ez", chapters: 48 },
+    "Daniel": { id: "dn", chapters: 12 },
+    "Oseias": { id: "os", chapters: 14 },
+    "Joel": { id: "jl", chapters: 3 },
+    "Amós": { id: "am", chapters: 9 },
+    "Obadias": { id: "ob", chapters: 1 },
+    "Jonas": { id: "jn", chapters: 4 },
+    "Miqueias": { id: "mq", chapters: 7 },
+    "Naum": { id: "na", chapters: 3 },
+    "Habacuque": { id: "hc", chapters: 3 },
+    "Sofonias": { id: "sf", chapters: 3 },
+    "Ageu": { id: "ag", chapters: 2 },
+    "Zacarias": { id: "zc", chapters: 14 },
+    "Malaquias": { id: "ml", chapters: 4 },
+    "Mateus": { id: "mt", chapters: 28 },
+    "Marcos": { id: "mc", chapters: 16 },
+    "Lucas": { id: "lc", chapters: 24 },
+    "João": { id: "jo", chapters: 21 },
+    "Atos": { id: "at", chapters: 28 },
+    "Romanos": { id: "rm", chapters: 16 },
+    "1 Coríntios": { id: "1co", chapters: 16 },
+    "2 Coríntios": { id: "2co", chapters: 13 },
+    "Gálatas": { id: "gl", chapters: 6 },
+    "Efésios": { id: "ef", chapters: 6 },
+    "Filipenses": { id: "fp", chapters: 4 },
+    "Colossenses": { id: "cl", chapters: 4 },
+    "1 Tessalonicenses": { id: "1ts", chapters: 5 },
+    "2 Tessalonicenses": { id: "2ts", chapters: 3 },
+    "1 Timóteo": { id: "1tm", chapters: 6 },
+    "2 Timóteo": { id: "2tm", chapters: 4 },
+    "Tito": { id: "tt", chapters: 3 },
+    "Filemom": { id: "fm", chapters: 1 },
+    "Hebreus": { id: "hb", chapters: 13 },
+    "Tiago": { id: "tg", chapters: 5 },
+    "1 Pedro": { id: "1pe", chapters: 5 },
+    "2 Pedro": { id: "2pe", chapters: 3 },
+    "1 João": { id: "1jo", chapters: 5 },
+    "2 João": { id: "2jo", chapters: 1 },
+    "3 João": { id: "3jo", chapters: 1 },
+    "Judas": { id: "jd", chapters: 1 },
+    "Apocalipse": { id: "ap", chapters: 22 }
 };
 
 const BOOKS = Object.keys(BOOK_METADATA);
 
 export default function BiblePage() {
-    const [translation, setTranslation] = useState("pt-arc");
+    const [translation, setTranslation] = useState("arc"); // Padrão alterado para 'arc' (compatível com nova API)
     const [book, setBook] = useState("Isaías");
     const [chapter, setChapter] = useState(41);
     const [data, setData] = useState<BibleChapter | null>(null);
@@ -120,11 +121,16 @@ export default function BiblePage() {
             const bookId = meta.id;
             let result;
 
+            // Mapeamento de versões para a API abibliadigital
+            // por_arc -> arc, por_acf -> acf, por_nvi -> nvi
+            const apiTranslation = translation.replace("por_", "");
+
             // Try local fetch first if it's a local translation
-            const localTranslations = ["por_blj", "por_onbv", "por_bsl", "por_blt", "por_tft"];
+            const localTranslations = ["blj", "onbv", "bsl", "blt", "tft"]; // ids simplificados se existirem localmente
             let usedLocal = false;
 
-            if (localTranslations.includes(translation)) {
+            // Se for uma versão local conhecida (ajustar conforme sua estrutura de arquivos)
+            if (translation.startsWith("por_") && localTranslations.includes(apiTranslation)) {
                 try {
                     const localRes = await fetch(`/bible/${translation}/${bookId}/${chapter}.json`);
                     if (localRes.ok) {
@@ -137,8 +143,11 @@ export default function BiblePage() {
             }
 
             if (!usedLocal) {
-                // API Format: https://bible.helloao.org/api/[translation]/[bookId]/[chapter].json
-                const response = await fetch(`https://bible.helloao.org/api/${translation}/${bookId}/${chapter}.json`);
+                // Nova API: abibliadigital.com.br
+                // Formato: https://www.abibliadigital.com.br/api/verses/[version]/[book]/[chapter]
+                // Exemplo: https://www.abibliadigital.com.br/api/verses/arc/is/41
+
+                const response = await fetch(`https://www.abibliadigital.com.br/api/verses/${apiTranslation}/${bookId}/${chapter}`);
 
                 if (!response.ok) {
                     if (response.status === 404) {
@@ -153,21 +162,38 @@ export default function BiblePage() {
                 }
 
                 result = await response.json();
+
+                // Formatação específica para resposta da abibliadigital
+                if (result.verses) {
+                    const formattedData: BibleChapter = {
+                        book: result.book.name,
+                        chapter: result.chapter.number,
+                        verses: result.verses.map((v: any) => ({
+                            number: v.number,
+                            text: v.text
+                        }))
+                    };
+                    setData(formattedData);
+                    return;
+                }
             }
 
-            // Format helloao data to our internal structure
-            const formattedData: BibleChapter = {
-                book: result.book.name,
-                chapter: result.chapter.number,
-                verses: result.chapter.content
-                    .filter((c: any) => c.type === "verse")
-                    .map((c: any) => ({
-                        number: c.number,
-                        text: c.content ? c.content.map((inner: any) => typeof inner === 'string' ? inner : (inner.text || '')).join('') : ""
-                    }))
-            };
+            // Fallback para estrutura antiga (se local) ou helloao (se mantido)
+            // Mas aqui vamos assumir que se não foi abibliadigital, usamos o formato antigo
+            if (usedLocal && result) {
+                const formattedData: BibleChapter = {
+                    book: result.book.name,
+                    chapter: result.chapter.number,
+                    verses: result.chapter.content
+                        .filter((c: any) => c.type === "verse")
+                        .map((c: any) => ({
+                            number: c.number,
+                            text: c.content ? c.content.map((inner: any) => typeof inner === 'string' ? inner : (inner.text || '')).join('') : ""
+                        }))
+                };
+                setData(formattedData);
+            }
 
-            setData(formattedData);
         } catch (err: any) {
             console.error(err);
             setError(err.message || "Erro ao carregar a Bíblia.");
@@ -190,7 +216,7 @@ export default function BiblePage() {
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault();
-        fetchChapter();
+        // A busca ocorre automaticamente via useEffect quando os estados mudam
     };
 
     return (
